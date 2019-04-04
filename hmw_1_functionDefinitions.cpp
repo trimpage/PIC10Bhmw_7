@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "hmw_1_functionDeclarations.h"
+#include "Player.h"
 
 void generateBoard(std::vector<std::string>& board) {
 	//sets the first row of the board
@@ -20,8 +21,8 @@ void generateBoard(std::vector<std::string>& board) {
 	}
 }
 
-std::vector<int> startTurn(const std::string name) {
-	std::cout << "It is " << name << "'s turn. \nWhere would you like to play? Enter your row position and column position: row col: ";
+std::vector<int> startTurn(const std::string& player) {
+	std::cout << "It is " << player << "'s turn. \nWhere would you like to play? Enter your row position and column position: row col: ";
 
 	//store the user inputted coordinates into a string then cast them into a vector of ints to be used to update the board later
 	std::string input;
@@ -33,7 +34,7 @@ std::vector<int> startTurn(const std::string name) {
 	return coordinates;
 }
 
-void updateBoard(int& turn, std::vector<std::string>& board, const std::vector<int> coordinates) {
+void updateBoard(int& turn, std::vector<std::string>& board, const std::vector<int>& coordinates) {
 	//create a new string representing row to be updated
 	std::string update = board[coordinates[0]];
 	
