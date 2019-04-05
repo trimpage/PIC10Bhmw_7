@@ -23,7 +23,7 @@ void printBoard(const std::vector<std::string>& board) {
 	}
 }
 
-void updateBoard(int& turn, std::vector<std::string>& board, const std::vector<int>& coordinates) {
+void updateBoard(int& turn, int& counter, std::vector<std::string>& board, const std::vector<int>& coordinates) {
 	//create a new string representing row to be updated
 	std::string update = board[coordinates[0]];
 	
@@ -39,7 +39,8 @@ void updateBoard(int& turn, std::vector<std::string>& board, const std::vector<i
 	board[coordinates[0]] = update;
 
 	//increase turn by 1
-	turn++;
+	++turn;
+	++counter;
 }
 
 std::vector<int> startTurn(const Player& player) {
@@ -55,12 +56,12 @@ std::vector<int> startTurn(const Player& player) {
 	return coordinates;
 }
 
-void playTurn(int& turn, bool& hasSomeoneWon, std::vector<std::string>& board, Player& player) {
+void playTurn(int& turn, int& counter, bool& hasSomeoneWon, std::vector<std::string>& board, Player& player) {
 	//start the first turn and get the coordinates the first player wants to play
 	std::vector<int> inputtedCoordinates = startTurn(player);
 
 	//update the board with that player's selection
-	updateBoard(turn, board, inputtedCoordinates);
+	updateBoard(turn, counter, board, inputtedCoordinates);
 
 	//print new updated board
 	printBoard(board);
@@ -111,43 +112,45 @@ void outputScores(Player& player1, Player& player2) {
 	std::cout << "Presently, " << player1.getName() << " has " << player1.getScore() << " points and " << player2.getName() << " has " << player2.getScore() << " points.\n";
 }
 
-void startRound(std::vector <std::string>& board, Player& player1, Player& player2) {
+void startRound(int& turn, std::vector<std::string>& board, Player& player1, Player& player2) {
 	//declare empty vector for the board and use functions to fill it and output the board
 	printBoard(board);
 
 	//set bool for if someone has won or not
 	bool didSomeoneWin = false;
 
-	//set int for turn count
-	int currentTurn = 0;
+	int tieCounter = 0;
 
 	//while no one has won yet, start the turn and play the game
 	while (didSomeoneWin == false) {
 		//if even turn, player 1 plays, else player 2 plays
-		if ((currentTurn % 2) == 0) {
-			playTurn(currentTurn, didSomeoneWin, board, player1);
+		if ((turn % 2) == 0) {
+			playTurn(turn, tieCounter, didSomeoneWin, board, player1);
 		}
 		else {
-			playTurn(currentTurn, didSomeoneWin, board, player2);
+			playTurn(turn, tieCounter, didSomeoneWin, board, player2);
 		}
 
-		//in case all possible turns are played and it is a tie, output current scores
-		if (currentTurn == 9) {
-			std::cout << "Tie! No one wins!\n";
+		//in case all possible turns are played and it is a tie, output current scores and reset tie counter
+		if (tieCounter == 9) {
+			std::cout << "\nTie! No one wins!\n";
 			outputScores(player1, player2);
+			tieCounter = 0;
 			break;
 		}
 
-		//if someone wins, declare it and update the player's score, output current scores
-		if ((didSomeoneWin == true) && ((currentTurn % 2) == 1)) {
+		//if someone wins, declare it and update the player's score, output current scores and reset tie counter
+		if ((didSomeoneWin == true) && ((turn % 2) == 1)) {
 			std::cout << '\n' << player1.getName() << " won the round!\n";
 			player1.updateScore();
 			outputScores(player1, player2);
+			tieCounter = 0;
 		}
 		else if (didSomeoneWin == true) {
 			std::cout << '\n' << player2.getName() << " won the round!\n";
 			player2.updateScore();
 			outputScores(player1, player2);
+			tieCounter = 0;
 		}
 	}
 }

@@ -35,10 +35,11 @@ int main() {
 
 	//while loop so that game loops until number of inputted rounds are played
 	int currentRound = 0;
+	int currentTurn = 0;
 	while (currentRound < numberOfRounds) {
 		//play round
 		std::vector<std::string> gameBoard = generateBoard();
-		startRound(gameBoard, player1, player2);
+		startRound(currentTurn, gameBoard, player1, player2);
 		++currentRound;
 	}
 

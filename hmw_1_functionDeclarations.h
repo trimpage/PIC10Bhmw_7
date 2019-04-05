@@ -20,10 +20,11 @@ void printBoard(const std::vector<std::string>& board);
 /**
 updates the game board with X or O at user selected coordinates
 @param turn: int counter for the current turn, will be updated each time the function is run
+@param counter: counter for keeping track of number of moves to see if there's a tie
 @param board: board vector that will be updated with the new turn
 @param coordinates: vector containing user inputted coordinates
 */
-void updateBoard(int& turn, std::vector<std::string>& board, const std::vector<int>& coordinates);
+void updateBoard(int& turn, int& counter, std::vector<std::string>& board, const std::vector<int>& coordinates);
 
 
 /**
@@ -34,12 +35,13 @@ std::vector<int> startTurn(const Player& player);
 
 /**
 plays the current turn, which includes starting the turn, getting input, updating the board vector, printing the new board, and checking if anyone has won
-@param turn: int counter for current turn to be passed into updateBoard function
+@param turn: int counter to keep track of who's turn it is
+@param counter: counter for keeping track of number of moves to see if there's a tie
 @param hasSomeoneWon: bool to check if anyone has won, will be passed into checkWin function
 @param board: game board vector that is being played with
 @param player: player object who's turn it is
 */
-void playTurn(int& turn, bool& hasSomeoneWon, std::vector<std::string>& board, Player& player);
+void playTurn(int& turn, int& counter, bool& hasSomeoneWon, std::vector<std::string>& board, Player& player);
 
 /**
 checks to see if there is a winner and updates the bool accordingly
@@ -57,8 +59,9 @@ void outputScores(Player& player1, Player& player2);
 
 /**
 starts the round and loops through the turns until someone wins or there is a tie
+@param turn: int counter for current turn to keep track of who's turn it is
 @param board: game board to be played with
 @param player1: first player object
 @param player2: second player object
 */
-void startRound(std::vector<std::string>& board, Player& player1, Player& player2);
+void startRound(int& turn, std::vector<std::string>& board, Player& player1, Player& player2);
