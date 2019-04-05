@@ -8,9 +8,9 @@ void generateBoard(std::vector<std::string>& board);
 
 /**
 states who's turn it is and asks where they want to play
-@param name: player who's turn it is
+@param player: player who's turn it is
 */
-std::vector<int> startTurn(const std::string& player);
+std::vector<int> startTurn(const Player& player);
 
 /**
 updates the game board with X or O at user selected coordinates

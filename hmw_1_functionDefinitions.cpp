@@ -21,8 +21,8 @@ void generateBoard(std::vector<std::string>& board) {
 	}
 }
 
-std::vector<int> startTurn(const std::string& player) {
-	std::cout << "It is " << player << "'s turn. \nWhere would you like to play? Enter your row position and column position: row col: ";
+std::vector<int> startTurn(const Player& player) {
+	std::cout << "It is " << player.getName() << "'s turn. \nWhere would you like to play? Enter your row position and column position: row col: ";
 
 	//store the user inputted coordinates into a string then cast them into a vector of ints to be used to update the board later
 	std::string input;

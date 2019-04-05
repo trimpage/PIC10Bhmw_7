@@ -42,7 +42,7 @@ int main() {
 
 		//start the first turn and get the coordinates the first player wants to play
 		int currentTurn = 0;
-		std::vector<int> inputtedCoordinates = startTurn(name1);
+		std::vector<int> inputtedCoordinates = startTurn(player1);
 
 		for (size_t i = 0; i < inputtedCoordinates.size(); ++i) {
 			std::cout << i;
