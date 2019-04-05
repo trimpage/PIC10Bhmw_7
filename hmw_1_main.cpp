@@ -36,23 +36,10 @@ int main() {
 	//while loop so that game loops until number of inputted rounds are played
 	int currentRound = 0;
 	while (currentRound < numberOfRounds) {
-		//declare empty vector for the board and use generate board function to fill it and output the board
-		std::vector<std::string> gameBoard;
-		generateBoard(gameBoard);
-
-		//start the first turn and get the coordinates the first player wants to play
-		int currentTurn = 0;
-		std::vector<int> inputtedCoordinates = startTurn(player1);
-
-		for (size_t i = 0; i < inputtedCoordinates.size(); ++i) {
-			std::cout << i;
-		}
-
-		std::cin.get();
-		//update the board with that player's selection
-		//updateBoard(currentTurn, gameBoard, inputtedCoordinates);
-
-		//std::cin.get();
+		//play round
+		std::vector<std::string> gameBoard = generateBoard();
+		startRound(gameBoard, player1, player2);
+		++currentRound;
 	}
 
 	return 0;
