@@ -65,3 +65,10 @@ starts the round and loops through the turns until someone wins or there is a ti
 @param player2: second player object
 */
 void startRound(int& turn, std::vector<std::string>& board, Player& player1, Player& player2);
+
+/**
+checks to see who won the overall game or if it was a tie
+@param player1: first player object
+@param player2: second player object
+*/
+void checkWinner(const Player& player1, const Player& player2);

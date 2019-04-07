@@ -27,10 +27,12 @@ void updateBoard(int& turn, int& counter, std::vector<std::string>& board, const
 	//create a new string representing row to be updated
 	std::string update = board[coordinates[0]];
 	
-	//if even turn, update row element with X, otherwise with O. multiply coordinate by 2 and subtract 1 to get proper string element
+	//if even turn, update row element with 'o'
+	//multiply coordinate by 2 and subtract 1 to get proper string element
 	if ((turn % 2) == 0) {
 		update[(2 * coordinates[1]) - 1] = 'x';
 	}
+	//else update row element with 'o'
 	else {
 		update[(2 * coordinates[1]) - 1] = 'o';
 	}
@@ -44,9 +46,11 @@ void updateBoard(int& turn, int& counter, std::vector<std::string>& board, const
 }
 
 std::vector<int> startTurn(const Player& player) {
-	std::cout << "\nIt is " << player.getName() << "'s turn. \nWhere would you like to play? Enter your row position and column position: row col: ";
+	std::cout << "\nIt is " << player.getName() 
+		<< "'s turn. \nWhere would you like to play? Enter your row position and column position: row col: ";
 
-	//store the user inputted coordinates into a string then cast them into a vector of ints to be used to update the board later
+	//store the user inputted coordinates into a string then cast them 
+	//into a vector of ints to be used to update the board later
 	std::string input;
 	std::vector<int> coordinates;
 	std::getline(std::cin, input);
@@ -77,7 +81,8 @@ void checkWin(bool& hasSomeoneWon, const std::vector<std::string>& board) {
 	std::string row2 = board[2];
 	std::string row3 = board[3];
 
-	//go through the coordinates for each winning combination and check if they all have the same value, meaning someone has won
+	//go through the coordinates for each winning combination and check if they all have the same 
+	// value of 'x' or 'o', meaning someone has won
 	if (((row1[1] == 'x') || (row1[1] == 'o')) && (row1[1] == row1[3]) && (row1[3] == row1[5])) {
 		hasSomeoneWon = true;
 	}
@@ -109,24 +114,26 @@ void checkWin(bool& hasSomeoneWon, const std::vector<std::string>& board) {
 
 void outputScores(Player& player1, Player& player2) {
 	//output scores at end of round
-	std::cout << "Presently, " << player1.getName() << " has " << player1.getScore() << " points and " << player2.getName() << " has " << player2.getScore() << " points.\n";
+	std::cout << "Presently, " << player1.getName() << " has " << player1.getScore() << " points and " 
+		<< player2.getName() << " has " << player2.getScore() << " points.\n";
 }
 
 void startRound(int& turn, std::vector<std::string>& board, Player& player1, Player& player2) {
 	//declare empty vector for the board and use functions to fill it and output the board
 	printBoard(board);
 
-	//set bool for if someone has won or not
+	//set bool for if someone has won or not, will be referenced to later functions and updated during the turn if someone wins
 	bool didSomeoneWin = false;
 
 	int tieCounter = 0;
 
 	//while no one has won yet, start the turn and play the game
 	while (didSomeoneWin == false) {
-		//if even turn, player 1 plays, else player 2 plays
+		//if even turn, player 1 plays
 		if ((turn % 2) == 0) {
 			playTurn(turn, tieCounter, didSomeoneWin, board, player1);
 		}
+		//else player 2 plays
 		else {
 			playTurn(turn, tieCounter, didSomeoneWin, board, player2);
 		}
@@ -140,12 +147,14 @@ void startRound(int& turn, std::vector<std::string>& board, Player& player1, Pla
 		}
 
 		//if someone wins, declare it and update the player's score, output current scores and reset tie counter
+		//even turn means player 1 won
 		if ((didSomeoneWin == true) && ((turn % 2) == 1)) {
 			std::cout << '\n' << player1.getName() << " won the round!\n";
 			player1.updateScore();
 			outputScores(player1, player2);
 			tieCounter = 0;
 		}
+		//else odd turn, meaning player 2 won
 		else if (didSomeoneWin == true) {
 			std::cout << '\n' << player2.getName() << " won the round!\n";
 			player2.updateScore();
@@ -153,4 +162,23 @@ void startRound(int& turn, std::vector<std::string>& board, Player& player1, Pla
 			tieCounter = 0;
 		}
 	}
+}
+
+void checkWinner(const Player& player1, const Player& player2) {
+	//check each player score and determine a winner or a tie
+	//if player 1 score is higher, they win
+	if (player1.getScore() > player2.getScore()) {
+		std::cout << player1.getName() << " wins!\n";
+	}
+	//if scores are tied, declare a tie
+	else if (player1.getScore() == player2.getScore()) {
+		std::cout << "It is a draw!\n";
+	}
+	//else player 2 must have won
+	else {
+		std::cout << player2.getName() << " wins!\n";
+	}
+	
+	//cin.get so that results can be viewed at the end
+	std::cin.get();
 }

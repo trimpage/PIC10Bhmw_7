@@ -33,9 +33,13 @@ int main() {
 
 	std::cout << "Let the game begin! \n";
 
-	//while loop so that game loops until number of inputted rounds are played
+	
+	//currentRound keeps track of the rounds so the while loop runs that many rounds
 	int currentRound = 0;
+	//currentTurn is used to keep track of alternating turns so the correct player is playing each round
 	int currentTurn = 0;
+
+	//while loop so that game loops until number of inputted rounds are played
 	while (currentRound < numberOfRounds) {
 		//play round
 		std::vector<std::string> gameBoard = generateBoard();
@@ -43,5 +47,7 @@ int main() {
 		++currentRound;
 	}
 
+	//declare a winner or tie after all rounds have been played
+	checkWinner(player1, player2);
 	return 0;
 }

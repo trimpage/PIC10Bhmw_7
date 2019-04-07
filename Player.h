@@ -4,9 +4,11 @@
 #define PLAYER
 #include <string>
 
-class Player { //class for player object
+//class for player object
+class Player { 
 public: 
-	Player(std::string name); //constructor using name and score
+	//constructor using name
+	Player(std::string name);
 
 	/**
 	function to increase winner's score
@@ -26,8 +28,10 @@ public:
 	int getScore() const;
 
 private:
-	std::string name; //string to store player name
-	int score; //int to store player score
+	//string to store player name
+	std::string name; 
+	//int to store player score
+	int score;
 };
 
 #endif	
