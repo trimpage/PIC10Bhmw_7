@@ -22,7 +22,7 @@ namespace pic10b {
 		VectorString(const VectorString& oldVector);
 
 		//move constructor
-		VectorString(VectorString&& oldVector);
+		VectorString(VectorString&& oldVector) noexcept;
 
 		/**
 		copy assignment operator to copy a vector to another
@@ -36,7 +36,7 @@ namespace pic10b {
 		@param oldVector: vector to be moved from
 		@return: new vector that old vector values were moved to
 		*/
-		VectorString& operator = (const VectorString&& oldVector);
+		VectorString& operator = (VectorString&& oldVector) noexcept;
 
 		/**
 		size member function that returns vector size

@@ -2,10 +2,10 @@
 
 #include "VectorString.h"
 
-//initializing default constructor
+//default constructor
 pic10b::VectorString::VectorString() : vec_size(0), vec_capacity(1), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {}
 
-//initializing size_t constructor
+//size_t constructor
 pic10b::VectorString::VectorString(size_t size) : vec_size(size), vec_capacity(2 * size), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
 	//for loop to set vector elements to empty string
 	for (size_t i = 0; i < vec_size; ++i) {
@@ -13,7 +13,7 @@ pic10b::VectorString::VectorString(size_t size) : vec_size(size), vec_capacity(2
 	}
 }
 
-//initialize size and string constructor
+//size and string constructor
 pic10b::VectorString::VectorString(size_t size, const std::string& inputString) 
 	: vec_size(size), vec_capacity(2 * size), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
 	//for loop to set vector elements to inputted string
@@ -22,28 +22,29 @@ pic10b::VectorString::VectorString(size_t size, const std::string& inputString)
 	}
 }
 
-//initialize copy constructor
+//copy constructor
 pic10b::VectorString::VectorString(const VectorString& copyVector) 
 	: vec_size(copyVector.vec_size), vec_capacity(copyVector.vec_capacity), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
-	//copy over values of each elements to new vector
+	//copy over values of each element to new vector
 	for (size_t i = 0; i < vec_size; ++i) {
 		stringPointer[i] = copyVector.stringPointer[i];
 	}
 }
 
-//initialize move constructor
-pic10b::VectorString::VectorString(VectorString&& oldVector) 
-	: vec_size(std::move(oldVector.vec_size)), vec_capacity(std::move(oldVector.vec_capacity)), stringPointer(std::move(oldVector.stringPointer)) {
+//move constructor
+pic10b::VectorString::VectorString(VectorString&& oldVector) noexcept : VectorString() {
+	//invoke default constructor (above) and then swap all values
+	std::swap(vec_size, oldVector.vec_size);
+	std::swap(vec_capacity, oldVector.vec_capacity);
+	std::swap(stringPointer, oldVector.stringPointer);
 }
 
 //copy assignment operator
 pic10b::VectorString& pic10b::VectorString::operator = (const VectorString& oldVector) {
 	//copy as long as vectors aren't already the same
 	if (this != &oldVector) {
-		//copy size
+		//copy size and capacity
 		vec_size = oldVector.vec_size;
-		
-		//copy capacity
 		vec_capacity = oldVector.vec_capacity;
 
 		//make new string pointer and copy over old values
@@ -56,20 +57,13 @@ pic10b::VectorString& pic10b::VectorString::operator = (const VectorString& oldV
 }
 
 //move assignment operator
-pic10b::VectorString& pic10b::VectorString::operator = (const VectorString&& oldVector) {
+pic10b::VectorString& pic10b::VectorString::operator = (VectorString&& oldVector) noexcept {
 	//move as long as vectors aren't already the same
 	if (this != &oldVector) {
-		//move size
-		vec_size = std::move(oldVector.vec_size);
-
-		//move capacity
-		vec_capacity = std::move(oldVector.vec_capacity);
-
-		//make new string pointer and move over old values
-		stringPointer = std::make_unique<std::string[]>(vec_capacity);
-		for (size_t i = 0; i < vec_size; ++i) {
-			stringPointer[i] = std::move(oldVector.stringPointer[i]);
-		}
+		//swap all values
+		std::swap(vec_size, oldVector.vec_size);
+		std::swap(vec_capacity, oldVector.vec_capacity);
+		std::swap(stringPointer, oldVector.stringPointer);
 	}
 	return *this;
 }
