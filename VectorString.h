@@ -91,7 +91,5 @@ namespace pic10b {
 		//unqiue pointer variable 
 		std::unique_ptr<std::string[]> stringPointer;
 	};
-
-
 }
 #endif	
