@@ -111,7 +111,7 @@ void pic10b::VectorString::pop_back() {
 	--vec_size;
 }
 
-//deleteAt fumction
+//deleteAt function
 void pic10b::VectorString::deleteAt(const size_t& index) {
 	//for loop to iterate over indices and shift them back, deleting given index as well
 	for (size_t i = index; i < vec_size; ++i) {
