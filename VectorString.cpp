@@ -14,7 +14,8 @@ pic10b::VectorString::VectorString(size_t size) : vec_size(size), vec_capacity(2
 }
 
 //initialize size and string constructor
-pic10b::VectorString::VectorString(size_t size, const std::string& inputString) : vec_size(size), vec_capacity(2 * size), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
+pic10b::VectorString::VectorString(size_t size, const std::string& inputString) 
+	: vec_size(size), vec_capacity(2 * size), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
 	//for loop to set vector elements to inputted string
 	for (size_t i = 0; i < vec_size; ++i) {
 		stringPointer[i] = inputString;
@@ -22,7 +23,8 @@ pic10b::VectorString::VectorString(size_t size, const std::string& inputString) 
 }
 
 //initialize copy constructor
-pic10b::VectorString::VectorString(const VectorString& copyVector) : vec_size(copyVector.vec_size), vec_capacity(copyVector.vec_capacity), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
+pic10b::VectorString::VectorString(const VectorString& copyVector) 
+	: vec_size(copyVector.vec_size), vec_capacity(copyVector.vec_capacity), stringPointer(std::make_unique<std::string[]>(vec_capacity)) {
 	//copy over values of each elements to new vector
 	for (size_t i = 0; i < vec_size; ++i) {
 		stringPointer[i] = copyVector.stringPointer[i];
@@ -30,7 +32,8 @@ pic10b::VectorString::VectorString(const VectorString& copyVector) : vec_size(co
 }
 
 //initialize move constructor
-pic10b::VectorString::VectorString(VectorString&& oldVector) : vec_size(std::move(oldVector.vec_size)), vec_capacity(std::move(oldVector.vec_capacity)), stringPointer(std::move(oldVector.stringPointer)) {
+pic10b::VectorString::VectorString(VectorString&& oldVector) 
+	: vec_size(std::move(oldVector.vec_size)), vec_capacity(std::move(oldVector.vec_capacity)), stringPointer(std::move(oldVector.stringPointer)) {
 }
 
 //copy assignment operator
