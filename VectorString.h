@@ -4,7 +4,6 @@
 #define VECTORSTRING
 #include <string>
 #include <memory>
-#include <iostream>
 
 //class for vector string, within namespace pic10b
 namespace pic10b {
