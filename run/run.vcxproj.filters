@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\MagicSquare.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\MagicSquare.cpp">
+    <ClCompile Include="Solve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
