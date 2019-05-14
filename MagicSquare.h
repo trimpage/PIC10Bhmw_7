@@ -18,9 +18,9 @@ public:
 	void output() const {
 		for (size_t i = 0, j = size; i < j; ++i) {
 			for (size_t k = 0; k < j; ++k) {
-				std::cout << numbers[i][k];
+				std::cout << numbers[i][k] << " ";
 			}
-			std::cout << '\n';
+			std::cout << "\n\n";
 		}
 	}
 

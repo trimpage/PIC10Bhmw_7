@@ -10,19 +10,19 @@ std::istream& operator>>(std::istream& inStream, std::vector<std::vector<int>>& 
 	for (size_t i = 0; i < numberOfRows; ++i) {
 		for (size_t j = 0; j < rowSize; ++j) {
 			//input variable
-			char input;
+			std::string input;
 
 			//get values from user
 			inStream >> input;
 
 			//if input is *
-			if (input == '*') {
-				//discard and continue
+			if (input == "*") {
+				//ignore and continue
 				continue;
 			}
 			else {
 				//else set vector value to user input
-				_numbers[i][j] = (input - '0');
+				_numbers[i][j] = std::stoi(input);
 			}
 		}
 		std::cout << '\n';
