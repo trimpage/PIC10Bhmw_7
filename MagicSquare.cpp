@@ -7,8 +7,8 @@
 MagicSquare::MagicSquare(const size_t& _size, const std::vector<std::vector<int>>& _numbers) : size(_size), numbers(_numbers) {}
 
 //operator >> overload
-std::istream& operator>>(std::istream& inStream, std::vector<std::vector<int>>& _numbers) {
-	/*//create size_t variables for number of rows and row size
+/*std::istream& operator>>(std::istream& inStream, std::vector<std::vector<int>>& _numbers) {
+	//create size_t variables for number of rows and row size
 	size_t numberOfRows = _numbers.size();
 	size_t rowSize = _numbers[0].size();
 
@@ -31,6 +31,6 @@ std::istream& operator>>(std::istream& inStream, std::vector<std::vector<int>>& 
 			}
 		}
 		std::cout << '\n';
-	}*/
+	}
 	return inStream;
-}
+}*/

@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\MagicSquare.cpp" />
     <ClCompile Include="Solve.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\githubs\trimpage\PIC10Bhmw_6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\githubs\trimpage\PIC10Bhmw_6\run;G:\githubs\trimpage\PIC10Bhmw_6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
