@@ -2,33 +2,21 @@
 
 #include "MagicSquare.h"
 
-std::istream& operator>>(std::istream& inStream, std::vector<std::vector<int>>& _numbers) {
-	//create size_t variables for number of rows and row size
-	size_t numberOfRows = _numbers.size();
-	size_t rowSize = _numbers[0].size();
+/*
+operator >> overload for writing to vector from user input stream
+@param inStream: input stream, typically std::cin, to read from
+@param _numbers: vector to write to
+@return: returns input stream
+*/
+std::istream& operator>>(std::istream& inStream, std::vector<std::vector<int>>& _numbers);
 
-	for (size_t i = 0; i < numberOfRows; ++i) {
-		for (size_t j = 0; j < rowSize; ++j) {
-			//input variable
-			std::string input;
-
-			//get values from user
-			inStream >> input;
-
-			//if input is *
-			if (input == "*") {
-				//ignore and continue
-				continue;
-			}
-			else {
-				//else set vector value to user input
-				_numbers[i][j] = std::stoi(input);
-			}
-		}
-		std::cout << '\n';
-	}
-	return inStream;
-}
+/*
+operator << overload for outputting magic square vector
+@param inStream: output stream, typically std::cout, to output from
+@param _numbers: vector of magic number to output
+@return: returns output stream
+*/
+std::ostream& operator<<(std::ostream& outStream, const std::vector<std::vector<int>>& _numbers);
 
 int main() {
 	//create size_t variable for user inputted size
@@ -36,17 +24,29 @@ int main() {
 	std::cout << "Enter a square size: ";
 	std::cin >> input;
 
-	//create vector to pass into square with user inputted size
+	//create vector for numbers and initialize them all to 0
 	std::vector<std::vector<int>> numbers (input, std::vector<int>(input));
 
 	//obtain user constraints
-	std::cout << "Enter square format:\n";
+	std::cout << "Enter square format:\n\n";
 	std::cin >> numbers;
 
-	//create the square object
-	MagicSquare a = MagicSquare(input, numbers);
-	a.output();
+	//input size squared variable
+	size_t inputSquared = static_cast<size_t>(pow(input, 2));
 
+	//create target sum with input size
+	int targetSum = static_cast<int>((input * (inputSquared + 1)) / 2);
+
+	//create the square object
+	MagicSquare a = MagicSquare(input, targetSum, numbers);
+	std::cout << a.get_numbers();
+
+	if (a.checkValid()) {
+		std::cout << "valid";
+	}
+	else {
+		std::cout << "not valid";
+	}
 
 	system("pause");
 	std::cin.get();
