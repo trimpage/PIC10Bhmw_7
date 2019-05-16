@@ -38,17 +38,19 @@ int main() {
 	int targetSum = static_cast<int>((input * (inputSquared + 1)) / 2);
 
 	//create the square object
-	MagicSquare a = MagicSquare(input, targetSum, numbers);
-	std::cout << a.get_numbers();
+	MagicSquare a = MagicSquare(input, inputSquared, targetSum, numbers);
+	
+	//copy unused numbers set
+	std::set<int> unusedSet = a.get_unused();
 
-	if (a.checkValid()) {
-		std::cout << "valid";
-	}
-	else {
-		std::cout << "not valid";
-	}
+	//create vector with unused numbers from set so we can swap values when solving
+	std::vector<int> unused(unusedSet.begin(), unusedSet.end());
 
-	system("pause");
+	//solve square object
+	size_t considered = 0;
+	a.solveSquare(considered, unused);
+	std::cout << "Solving complete!\nThere were " << a.get_count() << "solutions!";
+
 	std::cin.get();
 	return 0;
 }

@@ -56,19 +56,24 @@ std::ostream& operator<<(std::ostream& outStream, const std::vector<std::vector<
 
 //MAGICSQUARE CLASS DEFINITIONS
 //constructor
-MagicSquare::MagicSquare(const size_t& _size, const int& _targetSum, const std::vector<std::vector<int>>& _numbers) 
-	: solutionCount(0), size(_size), targetSum(_targetSum), numbers(_numbers) {
-	//store taken numbers in set
+MagicSquare::MagicSquare(const size_t& _size, const size_t& _sizeSquared, const int& _targetSum, const std::vector<std::vector<int>>& _numbers) 
+	: solutionCount(0), size(_size), sizeSquared(_sizeSquared), targetSum(_targetSum), numbers(_numbers) {
+	//store numbers 1 through n^2 in set
+	for (size_t i = 1; i < sizeSquared; ++i) {
+		unusedNumbers.insert(static_cast<int>(i));
+	}
+
+	//remove taken numbers from set
 	for (size_t i = 0; i < size; ++i) {
 		for (size_t k = 0; k < size; ++k) {
 			//if number at index is not 0
 			if (numbers[i][k] != 0) {
-				//insert number into taken numbers set
-				takenNumbers.insert(numbers[i][k]);
+				//remove from unused numbers
+				unusedNumbers.erase(numbers[i][k]);
 
 				//create vector for user inputted index and store to set of fixed indices
 				std::vector<size_t> index = { i, k };
-				fixedIndices.insert(index);
+				fixedIndices.push_back(index);
 			}
 			//else continue
 			else {
@@ -84,10 +89,71 @@ void MagicSquare::setNumber(const int& number, const std::vector<int>& index) {
 }
 
 //solve square function
-void MagicSquare::solveSquare(size_t considered) {
-	if (checkValid()) {
-		std::cout << numbers;
-		++solutionCount;
+void MagicSquare::solveSquare(size_t considered, std::vector<int> unused) {
+	//size_t variable for size of unused numbers vector
+	size_t sizeUnused = unused.size();
+
+	//if we have considered every number possible
+	if (considered == sizeUnused) {
+		size_t count = 0;
+
+		//for all indices of numbers
+		for (size_t i = 0; i < size; ++i) {
+			for (size_t j = 0; j < size; ++j) {
+				//fixed indices size
+				size_t fixed = fixedIndices.size();
+
+				//search for fixed index
+				for (size_t k = 0; k < fixed; ++k) {
+					//if index is fixed
+					if ((fixedIndices[k][0] == i) && (fixedIndices[k][1] == j)) {
+						break;
+					}
+					//else continue
+					else {
+						continue;
+					}
+				}
+				//if value in numbers is 0
+				if (numbers[i][j] == 0) {
+					//place in an unused number and increase count
+					numbers[i][j] = unused[count];
+					++count;
+				}
+			}
+		}
+
+		//if valid solution
+		if (checkValid()) {
+			std::cout << numbers;
+			++solutionCount;
+		}
+		//else continue as normal, discarding the solution
+	}
+	else {
+		for (size_t i = 0; i < size; ++i) {
+			for (size_t j = 0; j < size; ++j) {
+				//if slot is empty
+				if (numbers[i][j] == 0) {
+					//for unplaced elements
+					for (size_t i = considered; i < sizeUnused; ++i) {
+						//swap
+						std::swap(unused[considered], unused[i]);
+
+						//recursion
+						solveSquare(++considered, unused);
+
+						//undo swap
+						std::swap(unused[considered], unused[i]);
+					}
+				}
+				//else recursion
+				else {
+					//recursion
+					solveSquare(++considered, unused);
+				}
+			}
+		}
 	}
 }
 
@@ -105,13 +171,13 @@ bool MagicSquare::empty(size_t row, size_t column) const {
 
 //taken function 
 bool MagicSquare::taken(int number) const {
-	//if number count within set is 0, return false
-	if (takenNumbers.count(number) == 0) {
-		return false;
-	}
-	//else return true
-	else {
+	//if number count within set is 0, return true
+	if (unusedNumbers.count(number) == 0) {
 		return true;
+	}
+	//else return false
+	else {
+		return false;
 	}
 }
 
@@ -243,6 +309,11 @@ int MagicSquare::diagonalSum(size_t diagonalNumber) const {
 	return diagonalSum;
 }
 
+//get count function
+int MagicSquare::get_count() const {
+	return solutionCount;
+}
+
 //get number function
 int MagicSquare::get_number(const std::vector<int>& index) const {
 	return numbers[index[0]][index[1]];
@@ -251,4 +322,9 @@ int MagicSquare::get_number(const std::vector<int>& index) const {
 //get numbers function
 std::vector<std::vector<int>> MagicSquare::get_numbers() const {
 	return numbers;
+}
+
+//get unused function
+std::set<int> MagicSquare::get_unused() const {
+	return unusedNumbers;
 }

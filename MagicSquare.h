@@ -7,11 +7,12 @@
 #include <vector>
 #include <set>
 #include <cmath>
+#include <algorithm>
 
 class MagicSquare {
 public:
 	//constructors
-	MagicSquare(const size_t& _size, const int& _targetSum, const std::vector<std::vector<int>>& _numbers);
+	MagicSquare(const size_t& _size, const size_t& _sizeSquared, const int& _targetSum, const std::vector<std::vector<int>>& _numbers);
 
 	/*
 	function to set number at given index
@@ -24,7 +25,7 @@ public:
 	function to solve given square
 	@param considered: number of slots in square already considered
 	*/
-	void solveSquare(size_t considered);
+	void solveSquare(size_t considered, std::vector<int> unused);
 
 	/*
 	function to check if magic square is empty at given position
@@ -77,6 +78,12 @@ public:
 	int diagonalSum(size_t diagonalNumber) const;
 
 	/*
+	function to get solution count
+	@return: returns solution count
+	*/
+	int get_count() const;
+
+	/*
 	function to get number at given index
 	@param index: vector containing index to get number from
 	@return: returns int at given index
@@ -89,6 +96,12 @@ public:
 	*/
 	std::vector<std::vector<int>> get_numbers() const;
 
+	/*
+	function to get unused numbers set
+	@return: set of unused numbers
+	*/
+	std::set<int> get_unused() const;
+
 private:
 	//valid solution count
 	int solutionCount;
@@ -96,17 +109,20 @@ private:
 	//size variable
 	const size_t size;
 
+	//square of size variable
+	const size_t sizeSquared;
+
 	//target sum variable
 	const int targetSum;
 
 	//vector of vector of ints, stores square values
 	std::vector<std::vector<int>> numbers;
 
-	//set of used numbers
-	std::set<int> takenNumbers;
+	//set of unused numbers
+	std::set<int> unusedNumbers;
 
 	//set of fixed indices
-	std::set<std::vector<size_t>> fixedIndices;
+	std::vector<std::vector<size_t>> fixedIndices;
 };
 
 #endif	
