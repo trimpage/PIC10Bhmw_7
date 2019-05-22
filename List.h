@@ -75,13 +75,6 @@ namespace pic10b {
 		void erase(iterator it);
 
 		/*
-		function to swap iterators pointing to adjacent nodes
-		@param leftIt: left iterator
-		@param rightIt: right iterator
-		*/
-		void adjacentSwap(const iterator& leftIt, const iterator& rightIt);
-
-		/*
 		function to sort list elements in ascending order
 		*/
 		void sort();

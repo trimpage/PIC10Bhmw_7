@@ -32,6 +32,9 @@ void pic10b::swap(LinkedList& firstList, LinkedList& secondList) {
 
 //search function
 bool pic10b::seqSearch(const_iterator firstIt, const_iterator secondIt, int value) {
+	//decrement secondIt to exclude that value
+	--secondIt;
+
 	//for the range between the iterators
 	for (firstIt; firstIt != secondIt; ++firstIt) {
 		//if the value matches
@@ -306,28 +309,6 @@ void pic10b::LinkedList::erase(iterator it) {
 	}
 }
 
-//adjacent swap function
-void pic10b::LinkedList::adjacentSwap(const iterator& leftIt, const iterator& rightIt) {
-	if (leftIt.current == first) {
-		first = rightIt.current;
-		leftIt.current->next = leftIt.current;
-		leftIt.current->next = rightIt.current->next;
-		rightIt.current->next = leftIt.current;
-	}
-	else if (rightIt.current == last) {
-		leftIt.current->previous->next = rightIt.current;
-		leftIt.current->next = leftIt.current;
-		leftIt.current->next = nullptr;
-		rightIt.current->next = leftIt.current;
-	}
-	else {
-		leftIt.current->previous->next = rightIt.current;
-		leftIt.current->next = leftIt.current;
-		leftIt.current->next = rightIt.current->next;
-		rightIt.current->next = leftIt.current;
-	}
-}
-
 //sort function
 void pic10b::LinkedList::sort() {
 	iterator end = iterator(last, this);
@@ -338,11 +319,11 @@ void pic10b::LinkedList::sort() {
 		iterator right = iterator(first->next, this);
 		
 		//while iterator right is not at the end
-		while (right != end) {
+		while (right.current != nullptr) {
 			//if value of left is greater than right
 			if (left.current->value > right.current->value) {
 				//swap nodes
-				adjacentSwap(left, right);
+				std::swap(left.current->value, right.current->value);
 			}
 			++left;
 			++right;
