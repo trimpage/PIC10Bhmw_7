@@ -77,7 +77,7 @@ namespace pic10b {
 		/*
 		function to sort list elements in ascending order
 		*/
-		void sort();
+		void sort() const;
 
 		/*
 		function to obtain beginning iterator

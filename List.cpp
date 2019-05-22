@@ -310,7 +310,7 @@ void pic10b::LinkedList::erase(iterator it) {
 }
 
 //sort function
-void pic10b::LinkedList::sort() {
+void pic10b::LinkedList::sort() const {
 	iterator end = iterator(last, this);
 
 	for (end; end.current != first->next; --end) {
