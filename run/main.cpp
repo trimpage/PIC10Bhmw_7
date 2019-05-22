@@ -7,7 +7,6 @@
 int main() {
 	// uses initialzier list constructor
 	pic10b::LinkedList list0{ 2,4,6,8 };
-	std::cout << list0.size();
 	list0.push_front(0);
 	list0.push_front(-11);
 	list0.pop_front();
@@ -15,8 +14,7 @@ int main() {
 	for (int i : list0) { // for all the ints, print them
 		std::cout << i << " ";
 	}
-	std::cout << '\n' << list0.size();
-
+	std::cout << '\n';
 	pic10b::LinkedList list1; // default constructor
 	list1.push_back(8);
 	list1.push_back(3);
@@ -38,7 +36,6 @@ int main() {
 
 	std::cout << "List 1: " << list1 << '\n';
 	std::cout << "List 2: " << list2 << '\n';
-	std::cout << list2.size();
 
 	auto beg1 = list1.begin();
 	auto end1 = list1.end();

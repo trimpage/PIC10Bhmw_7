@@ -43,7 +43,6 @@ bool pic10b::seqSearch(const_iterator firstIt, const_iterator secondIt, int valu
 			continue;
 		}
 	}
-
 	//if loop is over and haven't returned true, must be false
 	return false;
 }
@@ -125,7 +124,6 @@ pic10b::LinkedList& pic10b::LinkedList::operator=(LinkedList list) & {
 		//swap lists
 		swap(*this, list);
 	}
-
 	return *this;
 }
 
@@ -311,19 +309,21 @@ void pic10b::LinkedList::erase(iterator it) {
 //adjacent swap function
 void pic10b::LinkedList::adjacentSwap(const iterator& leftIt, const iterator& rightIt) {
 	if (leftIt.current == first) {
+		first = rightIt.current;
+		leftIt.current->next = leftIt.current;
 		leftIt.current->next = rightIt.current->next;
 		rightIt.current->next = leftIt.current;
-		leftIt.current->previous = rightIt.current;
-		rightIt.current->previous = nullptr;
 	}
 	else if (rightIt.current == last) {
-		leftIt.current->next = rightIt.current->next;
-		leftIt.current->previous = rightIt.current;
+		leftIt.current->previous->next = rightIt.current;
+		leftIt.current->next = leftIt.current;
+		leftIt.current->next = nullptr;
 		rightIt.current->next = leftIt.current;
 	}
 	else {
+		leftIt.current->previous->next = rightIt.current;
+		leftIt.current->next = leftIt.current;
 		leftIt.current->next = rightIt.current->next;
-		leftIt.current->previous = rightIt.current;
 		rightIt.current->next = leftIt.current;
 	}
 }
@@ -343,9 +343,7 @@ void pic10b::LinkedList::sort() {
 			if (left.current->value > right.current->value) {
 				//swap nodes
 				adjacentSwap(left, right);
-				return;
 			}
-			//increment iterators
 			++left;
 			++right;
 		}
